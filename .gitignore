@@ -46,3 +46,9 @@ app.*.map.json
 
 # Environment variables - NEVER commit API keys!
 .env
+
+# Firebase Configuration
+android/app/google-services.json
+ios/Runner/GoogleService-Info.plist
+lib/firebase_options.dart
+macos/Runner/GoogleService-Info.plist
