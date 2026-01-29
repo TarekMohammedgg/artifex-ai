@@ -1,6 +1,6 @@
-import 'package:artifex_ai/theme/toggle_theme.dart';
 import 'package:artifex_ai/theme/dark_mode.dart';
 import 'package:artifex_ai/theme/light_mode.dart';
+import 'package:artifex_ai/theme/toggle_theme.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
