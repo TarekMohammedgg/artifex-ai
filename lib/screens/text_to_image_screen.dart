@@ -124,136 +124,125 @@ class _TextToImageScreenState extends State<TextToImageScreen> {
       resizeToAvoidBottomInset: true,
       appBar: AppBar(title: const Text("Image Generator"), centerTitle: true),
       body: SafeArea(
-        child: LayoutBuilder(
-          builder: (context, constraints) {
-            return SingleChildScrollView(
-              child: ConstrainedBox(
-                constraints: BoxConstraints(minHeight: constraints.maxHeight),
-                child: IntrinsicHeight(
-                  child: Padding(
-                    padding: const EdgeInsets.all(16),
-                    child: Column(
-                      children: [
-                        // Input field with theme-aware colors
-                        TextField(
-                          controller: describeController,
-                          style: TextStyle(
-                            color: isDark ? Colors.white : Colors.grey.shade900,
-                          ),
-                          decoration: InputDecoration(
-                            hintText:
-                                "Describe the image you want to create...",
-                            hintStyle: TextStyle(
-                              color: isDark
-                                  ? Colors.grey[400]
-                                  : Colors.grey[600],
-                            ),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                            filled: true,
-                            fillColor: colorScheme.surfaceContainerHighest,
-                            prefixIcon: Icon(
-                              Icons.edit,
-                              color: colorScheme.primary,
-                            ),
-                          ),
-                          maxLines: 3,
-                          minLines: 1,
-                        ),
-                        const SizedBox(height: 16),
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            children: [
+              // Input field with theme-aware colors
+              TextField(
+                controller: describeController,
+                style: TextStyle(
+                  color: isDark ? Colors.white : Colors.grey.shade900,
+                ),
+                decoration: InputDecoration(
+                  hintText: "Describe the image you want to create...",
+                  hintStyle: TextStyle(
+                    color: isDark ? Colors.grey[400] : Colors.grey[600],
+                  ),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  filled: true,
+                  fillColor: colorScheme.surfaceContainerHighest,
+                  prefixIcon: Icon(
+                    Icons.edit,
+                    color: colorScheme.primary,
+                  ),
+                ),
+                maxLines: 3,
+                minLines: 1,
+              ),
+              const SizedBox(height: 16),
 
-                        // Style selector
-                        Row(
-                          children: [
-                            Text(
-                              "Choose your style",
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: colorScheme.onSurface,
+              // Style selector
+              Row(
+                children: [
+                  Text(
+                    "Choose your style",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: colorScheme.onSurface,
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 8),
+              SizedBox(
+                height: 40,
+                child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: ImageAIStyle.values.length,
+                  itemBuilder: (context, index) {
+                    final s = ImageAIStyle.values[index];
+                    final isSelected = style == s;
+
+                    return Padding(
+                      padding: const EdgeInsets.only(right: 8),
+                      child: ChoiceChip(
+                        label: Text(s.name),
+                        selected: isSelected,
+                        onSelected: (selected) {
+                          if (selected) {
+                            setState(() => style = s);
+                          }
+                        },
+                        selectedColor: colorScheme.primaryContainer,
+                        labelStyle: TextStyle(
+                          color: isSelected
+                              ? colorScheme.onPrimaryContainer
+                              : colorScheme.onSurface,
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ),
+              const SizedBox(height: 16),
+
+              // Generate button
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton.icon(
+                  onPressed: isLoading ? null : _generateImage,
+                  icon: isLoading
+                      ? const SizedBox(
+                          width: 20,
+                          height: 20,
+                          child: CircularProgressIndicator(
+                            strokeWidth: 2,
+                          ),
+                        )
+                      : const Icon(Icons.auto_awesome),
+                  label: isLoading
+                      ? AnimatedTextKit(
+                          pause: const Duration(milliseconds: 900),
+                          repeatForever: true,
+                          animatedTexts: [
+                            TyperAnimatedText(
+                              "Generating...",
+                              speed: const Duration(
+                                milliseconds: 100,
                               ),
                             ),
                           ],
-                        ),
-                        const SizedBox(height: 8),
-                        SizedBox(
-                          height: 40,
-                          child: ListView.builder(
-                            scrollDirection: Axis.horizontal,
-                            itemCount: ImageAIStyle.values.length,
-                            itemBuilder: (context, index) {
-                              final s = ImageAIStyle.values[index];
-                              final isSelected = style == s;
-
-                              return Padding(
-                                padding: const EdgeInsets.only(right: 8),
-                                child: ChoiceChip(
-                                  label: Text(s.name),
-                                  selected: isSelected,
-                                  onSelected: (selected) {
-                                    if (selected) {
-                                      setState(() => style = s);
-                                    }
-                                  },
-                                  selectedColor: colorScheme.primaryContainer,
-                                  labelStyle: TextStyle(
-                                    color: isSelected
-                                        ? colorScheme.onPrimaryContainer
-                                        : colorScheme.onSurface,
-                                  ),
-                                ),
-                              );
-                            },
-                          ),
-                        ),
-                        const SizedBox(height: 16),
-
-                        // Generate button
-                        SizedBox(
-                          width: double.infinity,
-                          child: ElevatedButton.icon(
-                            onPressed: isLoading ? null : _generateImage,
-                            icon: isLoading
-                                ? const SizedBox(
-                                    width: 20,
-                                    height: 20,
-                                    child: CircularProgressIndicator(
-                                      strokeWidth: 2,
-                                    ),
-                                  )
-                                : const Icon(Icons.auto_awesome),
-                            label: isLoading
-                                ? AnimatedTextKit(
-                                    pause: const Duration(milliseconds: 900),
-                                    repeatForever: true,
-                                    animatedTexts: [
-                                      TyperAnimatedText(
-                                        "Generating...",
-                                        speed: const Duration(
-                                          milliseconds: 100,
-                                        ),
-                                      ),
-                                    ],
-                                  )
-                                : const Text("Generate Image"),
-                            style: ElevatedButton.styleFrom(
-                              padding: const EdgeInsets.symmetric(vertical: 16),
-                              backgroundColor: colorScheme.primary,
-                              foregroundColor: colorScheme.onPrimary,
-                            ),
-                          ),
-                        ),
-                        const SizedBox(height: 20),
-
-                        // Image display area
-                        Expanded(child: _buildImageArea(colorScheme)),
-                      ],
-                    ),
+                        )
+                      : const Text("Generate Image"),
+                  style: ElevatedButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(vertical: 16),
+                    backgroundColor: colorScheme.primary,
+                    foregroundColor: colorScheme.onPrimary,
                   ),
                 ),
               ),
-            );
-          },
+              const SizedBox(height: 20),
+
+              // Image display area
+              SizedBox(
+                height: 350,
+                child: _buildImageArea(colorScheme),
+              ),
+            ],
+          ),
         ),
       ),
     );

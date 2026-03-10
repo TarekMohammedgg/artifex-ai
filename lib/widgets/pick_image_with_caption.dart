@@ -49,7 +49,7 @@ class _PickImageWithCaptionState extends State<PickImageWithCaption> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black12,
+      backgroundColor: Colors.black87,
       body: Stack(
         children: [
           GestureDetector(
@@ -118,8 +118,12 @@ class _PickImageWithCaptionState extends State<PickImageWithCaption> {
               left: 0,
               right: 0,
               child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
-                decoration: BoxDecoration(),
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+                margin: const EdgeInsets.symmetric(horizontal: 8),
+                decoration: BoxDecoration(
+                  color: Colors.grey[900],
+                  borderRadius: BorderRadius.circular(28),
+                ),
                 child: Row(
                   children: [
                     Expanded(
@@ -130,7 +134,7 @@ class _PickImageWithCaptionState extends State<PickImageWithCaption> {
                           hintText: "Add Caption",
                           hintStyle: TextStyle(color: Colors.white70),
                           filled: true,
-                          fillColor: Colors.grey[850],
+                          fillColor: Colors.grey[800],
                           contentPadding: const EdgeInsets.symmetric(
                             horizontal: 12,
                             vertical: 10,

@@ -1,7 +1,6 @@
 import 'package:artifex_ai/core/error_handling.dart';
 import 'package:artifex_ai/core/input_validator.dart';
 import 'package:artifex_ai/services/google_service.dart';
-import 'package:artifex_ai/widgets/shimmer_loading.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:dash_chat_2/dash_chat_2.dart';
 import 'package:flutter/material.dart';
@@ -43,13 +42,7 @@ class _TextToTextScreenState extends State<TextToTextScreen> {
         centerTitle: true,
         elevation: 0,
       ),
-      body: Column(
-        children: [
-          // Show shimmer loading when AI is processing
-          if (isLoading) const ChatMessageShimmer(isUserMessage: false),
-          Expanded(child: _buildUI()),
-        ],
-      ),
+      body: _buildUI(),
     );
   }
 
@@ -103,7 +96,7 @@ class _TextToTextScreenState extends State<TextToTextScreen> {
         showCurrentUserAvatar: false,
         showOtherUsersAvatar: true,
         avatarBuilder: (user, _, __) => Padding(
-          padding: const EdgeInsets.only(right: 8),
+          padding: const EdgeInsets.only(left: 8, right: 8),
           child: CircleAvatar(
             backgroundColor: colorScheme.tertiary,
             backgroundImage: user.profileImage != null

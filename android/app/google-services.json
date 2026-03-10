@@ -7,6 +7,25 @@
   "client": [
     {
       "client_info": {
+        "mobilesdk_app_id": "1:81071435697:android:f606b994681bce07ee1790",
+        "android_client_info": {
+          "package_name": "com.artifex.ai"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyByZgZq0Pl_zuEXarcHwKtDNZbDWMnQUZI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:81071435697:android:2c73fab8463d3f7cee1790",
         "android_client_info": {
           "package_name": "com.example.ai_chatbot"

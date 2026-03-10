@@ -55,5 +55,5 @@ class ErrorMessages {
   static const String emptyResponse =
       'Received empty response. Please try again.';
   static const String imageProcessingError =
-      'Error processing image. Please try a different image.';
+      'Failed to generate image. Please try again.';
 }
