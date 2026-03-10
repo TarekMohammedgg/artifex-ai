@@ -1,10 +1,10 @@
 import 'dart:ui';
-import 'package:artifex_ai/consts.dart';
 import 'package:artifex_ai/screens/image_studio_screen.dart';
 import 'package:artifex_ai/screens/image_to_text_chat_screen.dart';
 import 'package:artifex_ai/screens/settings_screen.dart';
 import 'package:artifex_ai/screens/text_to_image_screen.dart';
 import 'package:artifex_ai/screens/text_to_text_chat_screen.dart';
+import 'package:artifex_ai/theme/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:photo_manager/photo_manager.dart';
@@ -132,7 +132,9 @@ class _HomeScreenState extends State<HomeScreen> {
                           child: Container(
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(16),
-                              gradient: artifexGradient,
+                              gradient: Theme.of(
+                                context,
+                              ).customGradient, // Dynamically pulled from themes.dart
                             ),
                           ),
                         ),
@@ -177,47 +179,54 @@ class _HomeScreenState extends State<HomeScreen> {
                           ],
                         ),
                       ),
-                      CustomPositionedButton(
-                        icon: Icons.chat_outlined,
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const TextToTextScreen(),
-                            ),
-                          );
-                        },
-                        title: "Chat",
+                      Positioned(
                         left: 10,
-                        bottom: 10,
-                      ),
-                      CustomPositionedButton(
-                        icon: Icons.text_fields_sharp,
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const ImageToTextScreen(),
-                            ),
-                          );
-                        },
-                        title: "Describe",
-                        right: 120,
-                        bottom: 10,
-                      ),
-                      CustomPositionedButton(
-                        icon: Icons.stars,
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const TextToImageScreen(),
-                            ),
-                          );
-                        },
-                        title: "Imagine",
                         right: 10,
                         bottom: 10,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            GlassButton(
+                              icon: Icons.chat_outlined,
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        const TextToTextScreen(),
+                                  ),
+                                );
+                              },
+                              title: "Chat",
+                            ),
+                            GlassButton(
+                              icon: Icons.text_fields_sharp,
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        const ImageToTextScreen(),
+                                  ),
+                                );
+                              },
+                              title: "Describe",
+                            ),
+                            GlassButton(
+                              icon: Icons.stars,
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        const TextToImageScreen(),
+                                  ),
+                                );
+                              },
+                              title: "Imagine",
+                            ),
+                          ],
+                        ),
                       ),
                     ],
                   ),
@@ -231,61 +240,59 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 }
 
-class CustomPositionedButton extends StatelessWidget {
-  const CustomPositionedButton({
+class GlassButton extends StatefulWidget {
+  const GlassButton({
     super.key,
-    this.left,
-    this.top,
-    this.right,
-    this.bottom,
     required this.title,
     required this.onTap,
     required this.icon,
   });
-  final double? left;
-  final double? top;
-  final double? right;
-  final double? bottom;
   final String title;
   final VoidCallback? onTap;
   final IconData icon;
 
   @override
+  State<GlassButton> createState() => _GlassButtonState();
+}
+
+class _GlassButtonState extends State<GlassButton> {
+  bool _isPressed = false;
+
+  @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
 
-    return Positioned(
-      right: right,
-      bottom: bottom,
-      left: left,
-      top: top,
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(20),
-        child: BackdropFilter(
-          filter: ImageFilter.blur(sigmaX: 8, sigmaY: 8),
-          child: Material(
-            color: colorScheme.surface.withValues(alpha: 0.6),
-            child: InkWell(
-              onTap: onTap,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 14,
-                  vertical: 10,
-                ),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Icon(icon, color: colorScheme.primary, size: 20),
-                    const SizedBox(width: 6),
-                    Text(
-                      title,
-                      style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                        color: colorScheme.onSurface,
-                        fontWeight: FontWeight.bold,
-                      ),
+    return GestureDetector(
+      onTapDown: (_) => setState(() => _isPressed = true),
+      onTapUp: (_) {
+        setState(() => _isPressed = false);
+        if (widget.onTap != null) widget.onTap!();
+      },
+      onTapCancel: () => setState(() => _isPressed = false),
+      child: AnimatedScale(
+        scale: _isPressed ? 0.90 : 1.0,
+        duration: const Duration(milliseconds: 100),
+        curve: Curves.easeInOut,
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(20),
+          child: BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: 8, sigmaY: 8),
+            child: Container(
+              color: colorScheme.surface.withValues(alpha: 0.6),
+              padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(widget.icon, color: colorScheme.primary, size: 20),
+                  const SizedBox(width: 6),
+                  Text(
+                    widget.title,
+                    style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                      color: colorScheme.onSurface,
+                      fontWeight: FontWeight.bold,
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
           ),

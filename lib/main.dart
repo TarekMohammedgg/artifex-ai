@@ -2,12 +2,11 @@ import 'dart:developer';
 import 'package:artifex_ai/core/env.dart';
 import 'package:artifex_ai/firebase_options.dart';
 import 'package:artifex_ai/screens/home_screen.dart';
-import 'package:artifex_ai/theme/toggle_theme.dart';
+import 'package:artifex_ai/theme/themes.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_gemini/flutter_gemini.dart';
-import 'package:provider/provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -25,12 +24,7 @@ void main() async {
   // Initialize Gemini with API key from environment
   Gemini.init(apiKey: Env.geminiApiKey);
 
-  runApp(
-    ChangeNotifierProvider(
-      create: (context) => ThemeProvider(),
-      child: const ChatAiApp(),
-    ),
-  );
+  runApp(const ChatAiApp());
 }
 
 class ChatAiApp extends StatelessWidget {
@@ -39,9 +33,11 @@ class ChatAiApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: lightTheme,
+      darkTheme: darkTheme,
+      themeMode: ThemeMode.system, // Will switch based on system setting
       debugShowCheckedModeBanner: false,
       title: 'Artifex AI',
-      theme: Provider.of<ThemeProvider>(context).themeData,
       home: HomeScreen(),
     );
   }
