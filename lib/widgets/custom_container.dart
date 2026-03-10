@@ -6,22 +6,41 @@ class CustomContainer extends StatelessWidget {
   final Widget widget;
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => widget),
-        );
-      },
+    final colorScheme = Theme.of(context).colorScheme;
+
+    return Material(
+      color: Colors.transparent,
       child: Container(
-        padding: EdgeInsets.all(10),
         decoration: BoxDecoration(
-          color: Colors.blue.shade500,
+          color: colorScheme.secondary,
           borderRadius: BorderRadius.circular(15),
+          boxShadow: [
+            BoxShadow(
+              color: colorScheme.shadow.withValues(alpha: 0.1),
+              blurRadius: 10,
+              offset: const Offset(0, 4),
+            ),
+          ],
         ),
-        child: Text(
-          title,
-          style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+        child: InkWell(
+          borderRadius: BorderRadius.circular(15),
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => widget),
+            );
+          },
+          child: Padding(
+            padding: const EdgeInsets.all(12),
+            child: Text(
+              title,
+              style: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+                color: colorScheme.onSecondary,
+              ),
+            ),
+          ),
         ),
       ),
     );

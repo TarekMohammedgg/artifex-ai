@@ -48,8 +48,10 @@ class _PickImageWithCaptionState extends State<PickImageWithCaption> {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Scaffold(
-      backgroundColor: Colors.black87,
+      backgroundColor: colorScheme.surface,
       body: Stack(
         children: [
           GestureDetector(
@@ -84,23 +86,29 @@ class _PickImageWithCaptionState extends State<PickImageWithCaption> {
                         Positioned(
                           top: 4,
                           right: 4,
-                          child: GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                _selectedImages.removeAt(index);
-                              });
-                              if (_selectedImages.isEmpty)
-                                Navigator.pop(context);
-                            },
-                            child: Container(
-                              decoration: const BoxDecoration(
-                                color: Colors.black54,
-                                shape: BoxShape.circle,
-                              ),
-                              child: const Icon(
-                                Icons.close,
-                                color: Colors.white,
-                                size: 18,
+                          child: Material(
+                            color: Colors.transparent,
+                            child: InkWell(
+                              borderRadius: BorderRadius.circular(12),
+                              onTap: () {
+                                setState(() {
+                                  _selectedImages.removeAt(index);
+                                });
+                                if (_selectedImages.isEmpty)
+                                  Navigator.pop(context);
+                              },
+                              child: Container(
+                                padding: const EdgeInsets.all(2),
+                                decoration: BoxDecoration(
+                                  color: colorScheme.primaryContainer
+                                      .withValues(alpha: 0.8),
+                                  shape: BoxShape.circle,
+                                ),
+                                child: Icon(
+                                  Icons.close,
+                                  color: colorScheme.onPrimaryContainer,
+                                  size: 18,
+                                ),
                               ),
                             ),
                           ),
@@ -121,7 +129,7 @@ class _PickImageWithCaptionState extends State<PickImageWithCaption> {
                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
                 margin: const EdgeInsets.symmetric(horizontal: 8),
                 decoration: BoxDecoration(
-                  color: Colors.grey[900],
+                  color: colorScheme.surfaceContainerHighest,
                   borderRadius: BorderRadius.circular(28),
                 ),
                 child: Row(
@@ -129,12 +137,14 @@ class _PickImageWithCaptionState extends State<PickImageWithCaption> {
                     Expanded(
                       child: TextField(
                         controller: _captionController,
-                        style: const TextStyle(color: Colors.white),
+                        style: TextStyle(color: colorScheme.onSurface),
                         decoration: InputDecoration(
                           hintText: "Add Caption",
-                          hintStyle: TextStyle(color: Colors.white70),
+                          hintStyle: TextStyle(
+                            color: colorScheme.onSurfaceVariant,
+                          ),
                           filled: true,
-                          fillColor: Colors.grey[800],
+                          fillColor: colorScheme.surface,
                           contentPadding: const EdgeInsets.symmetric(
                             horizontal: 12,
                             vertical: 10,
@@ -147,15 +157,19 @@ class _PickImageWithCaptionState extends State<PickImageWithCaption> {
                       ),
                     ),
                     const SizedBox(width: 8),
-                    GestureDetector(
-                      onTap: _sendImages,
-                      child: Container(
-                        padding: const EdgeInsets.all(10),
-                        decoration: const BoxDecoration(
-                          color: Colors.green,
-                          shape: BoxShape.circle,
+                    Material(
+                      color: Colors.transparent,
+                      child: InkWell(
+                        borderRadius: BorderRadius.circular(24),
+                        onTap: _sendImages,
+                        child: Container(
+                          padding: const EdgeInsets.all(12),
+                          decoration: BoxDecoration(
+                            color: colorScheme.primary,
+                            shape: BoxShape.circle,
+                          ),
+                          child: Icon(Icons.send, color: colorScheme.onPrimary),
                         ),
-                        child: const Icon(Icons.send, color: Colors.white),
                       ),
                     ),
                   ],

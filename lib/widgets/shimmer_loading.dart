@@ -10,7 +10,6 @@ class ChatMessageShimmer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
-    final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -22,8 +21,8 @@ class ChatMessageShimmer extends StatelessWidget {
         children: [
           if (!isUserMessage) ...[
             Shimmer.fromColors(
-              baseColor: isDark ? Colors.grey[700]! : Colors.grey[300]!,
-              highlightColor: isDark ? Colors.grey[600]! : Colors.grey[100]!,
+              baseColor: colorScheme.surfaceContainerHighest,
+              highlightColor: colorScheme.surfaceContainer,
               child: CircleAvatar(
                 radius: 18,
                 backgroundColor: colorScheme.surfaceContainerHighest,
@@ -33,8 +32,8 @@ class ChatMessageShimmer extends StatelessWidget {
           ],
           Flexible(
             child: Shimmer.fromColors(
-              baseColor: isDark ? Colors.grey[700]! : Colors.grey[300]!,
-              highlightColor: isDark ? Colors.grey[600]! : Colors.grey[100]!,
+              baseColor: colorScheme.surfaceContainerHighest,
+              highlightColor: colorScheme.surfaceContainer,
               child: Container(
                 padding: const EdgeInsets.all(12),
                 decoration: BoxDecoration(
@@ -44,11 +43,11 @@ class ChatMessageShimmer extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    _buildShimmerLine(context, width: 200),
+                    _buildShimmerLine(colorScheme, width: 200),
                     const SizedBox(height: 8),
-                    _buildShimmerLine(context, width: 150),
+                    _buildShimmerLine(colorScheme, width: 150),
                     const SizedBox(height: 8),
-                    _buildShimmerLine(context, width: 180),
+                    _buildShimmerLine(colorScheme, width: 180),
                   ],
                 ),
               ),
@@ -59,12 +58,12 @@ class ChatMessageShimmer extends StatelessWidget {
     );
   }
 
-  Widget _buildShimmerLine(BuildContext context, {required double width}) {
+  Widget _buildShimmerLine(ColorScheme colorScheme, {required double width}) {
     return Container(
       width: width,
       height: 12,
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: colorScheme.surface,
         borderRadius: BorderRadius.circular(4),
       ),
     );
@@ -77,26 +76,29 @@ class ImageGenerationShimmer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final colorScheme = Theme.of(context).colorScheme;
 
     return Shimmer.fromColors(
-      baseColor: isDark ? Colors.grey[700]! : Colors.grey[300]!,
-      highlightColor: isDark ? Colors.grey[600]! : Colors.grey[100]!,
+      baseColor: colorScheme.surfaceContainerHighest,
+      highlightColor: colorScheme.surfaceContainer,
       child: Container(
         width: double.infinity,
         height: 300,
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: colorScheme.surface,
           borderRadius: BorderRadius.circular(16),
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(Icons.image_outlined, size: 64, color: Colors.grey[400]),
+            Icon(Icons.image_outlined, size: 64, color: colorScheme.outline),
             const SizedBox(height: 16),
             Text(
               'Generating image...',
-              style: TextStyle(color: Colors.grey[600], fontSize: 16),
+              style: TextStyle(
+                color: colorScheme.onSurfaceVariant,
+                fontSize: 16,
+              ),
             ),
           ],
         ),
@@ -111,16 +113,16 @@ class FeatureCardShimmer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final colorScheme = Theme.of(context).colorScheme;
 
     return Shimmer.fromColors(
-      baseColor: isDark ? Colors.grey[700]! : Colors.grey[300]!,
-      highlightColor: isDark ? Colors.grey[600]! : Colors.grey[100]!,
+      baseColor: colorScheme.surfaceContainerHighest,
+      highlightColor: colorScheme.surfaceContainer,
       child: Container(
         width: 150,
         height: 180,
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: colorScheme.surface,
           borderRadius: BorderRadius.circular(16),
         ),
       ),
@@ -136,7 +138,7 @@ class ImageGalleryShimmer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final colorScheme = Theme.of(context).colorScheme;
 
     return GridView.builder(
       shrinkWrap: true,
@@ -149,11 +151,11 @@ class ImageGalleryShimmer extends StatelessWidget {
       itemCount: itemCount,
       itemBuilder: (context, index) {
         return Shimmer.fromColors(
-          baseColor: isDark ? Colors.grey[700]! : Colors.grey[300]!,
-          highlightColor: isDark ? Colors.grey[600]! : Colors.grey[100]!,
+          baseColor: colorScheme.surfaceContainerHighest,
+          highlightColor: colorScheme.surfaceContainer,
           child: Container(
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: colorScheme.surface,
               borderRadius: BorderRadius.circular(8),
             ),
           ),

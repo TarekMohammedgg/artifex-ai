@@ -72,7 +72,9 @@ abstract class StabilityAi {
         );
       }
 
-      if (errorString.contains('rate limit') || errorString.contains('quota')) {
+      if (errorString.contains('rate limit') ||
+          errorString.contains('quota') ||
+          errorString.contains('429')) {
         throw AiServiceException(
           ErrorMessages.rateLimitExceeded,
           code: 'RATE_LIMIT',

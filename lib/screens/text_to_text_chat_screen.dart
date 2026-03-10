@@ -54,13 +54,32 @@ class _TextToTextScreenState extends State<TextToTextScreen> {
       onSend: _sendToGoogle,
       messages: messages,
       messageOptions: MessageOptions(
+        messageDecorationBuilder: (message, previousMessage, nextMessage) {
+          final isUser = message.user.id == currentUser.id;
+          return BoxDecoration(
+            color: isUser
+                ? colorScheme.primary
+                : colorScheme.surfaceContainerHighest,
+            borderRadius: BorderRadius.only(
+              topLeft: const Radius.circular(20),
+              topRight: const Radius.circular(20),
+              bottomLeft: Radius.circular(isUser ? 20 : 4),
+              bottomRight: Radius.circular(isUser ? 4 : 20),
+            ),
+          );
+        },
         messageTextBuilder: (message, _, __) {
+          final isUser = message.user.id == currentUser.id;
+          final textColor = isUser
+              ? colorScheme.onPrimary
+              : colorScheme.onSurface;
+
           if (message.text.startsWith("Thinking")) {
             return AnimatedTextKit(
               animatedTexts: [
                 TyperAnimatedText(
                   '...',
-                  textStyle: TextStyle(color: colorScheme.inversePrimary),
+                  textStyle: TextStyle(color: textColor),
                 ),
               ],
               repeatForever: true,
@@ -71,66 +90,75 @@ class _TextToTextScreenState extends State<TextToTextScreen> {
           return MarkdownBody(
             data: message.text,
             styleSheet: MarkdownStyleSheet(
-              p: TextStyle(color: colorScheme.inversePrimary),
-              h1: TextStyle(color: colorScheme.inversePrimary),
-              h2: TextStyle(color: colorScheme.inversePrimary),
-              h3: TextStyle(color: colorScheme.inversePrimary),
-              code: TextStyle(
-                color: colorScheme.inversePrimary,
-                backgroundColor: colorScheme.tertiary,
+              p: Theme.of(
+                context,
+              ).textTheme.bodyLarge?.copyWith(color: textColor),
+              h1: Theme.of(
+                context,
+              ).textTheme.headlineMedium?.copyWith(color: textColor),
+              h2: Theme.of(
+                context,
+              ).textTheme.headlineSmall?.copyWith(color: textColor),
+              h3: Theme.of(
+                context,
+              ).textTheme.titleLarge?.copyWith(color: textColor),
+              code: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                color: colorScheme.onSurfaceVariant,
+                backgroundColor: colorScheme.surfaceContainerHigh,
               ),
               codeblockDecoration: BoxDecoration(
-                color: colorScheme.tertiary,
+                color: colorScheme.surfaceContainerHigh,
                 borderRadius: BorderRadius.circular(8),
               ),
             ),
           );
         },
-        // User message bubble
-        currentUserContainerColor: colorScheme.primary,
-        currentUserTextColor: colorScheme.inversePrimary,
-        // AI message bubble
-        containerColor: colorScheme.secondary,
-        textColor: colorScheme.inversePrimary,
         // Avatar
         showCurrentUserAvatar: false,
         showOtherUsersAvatar: true,
         avatarBuilder: (user, _, __) => Padding(
           padding: const EdgeInsets.only(left: 8, right: 8),
           child: CircleAvatar(
-            backgroundColor: colorScheme.tertiary,
+            backgroundColor: colorScheme.surfaceContainerHighest,
             backgroundImage: user.profileImage != null
                 ? AssetImage(user.profileImage!)
                 : null,
             child: user.profileImage == null
-                ? Icon(Icons.smart_toy, color: colorScheme.inversePrimary)
+                ? Icon(Icons.smart_toy, color: colorScheme.primary)
                 : null,
           ),
         ),
       ),
       inputOptions: InputOptions(
         alwaysShowSend: true,
-        sendButtonBuilder: (onSend) => IconButton(
-          onPressed: onSend,
-          icon: Icon(Icons.send_rounded, color: colorScheme.primary),
+        sendButtonBuilder: (onSend) => Material(
+          color: Colors.transparent,
+          child: InkWell(
+            borderRadius: BorderRadius.circular(24),
+            onTap: onSend,
+            child: Padding(
+              padding: const EdgeInsets.all(12),
+              child: Icon(Icons.send_rounded, color: colorScheme.primary),
+            ),
+          ),
         ),
-        inputTextStyle: TextStyle(color: colorScheme.inversePrimary),
+        inputTextStyle: Theme.of(
+          context,
+        ).textTheme.bodyLarge?.copyWith(color: colorScheme.onSurface),
         inputDecoration: InputDecoration(
           hintText: "Type a message...",
-          hintStyle: TextStyle(
-            color: colorScheme.inversePrimary.withValues(alpha: 0.5),
-          ),
+          hintStyle: Theme.of(
+            context,
+          ).textTheme.bodyLarge?.copyWith(color: colorScheme.onSurfaceVariant),
           filled: true,
-          fillColor: colorScheme.secondary,
+          fillColor: colorScheme.surfaceContainerHighest,
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(24),
             borderSide: BorderSide.none,
           ),
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(24),
-            borderSide: BorderSide(
-              color: colorScheme.primary.withValues(alpha: 0.3),
-            ),
+            borderSide: BorderSide.none,
           ),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(24),
@@ -210,14 +238,14 @@ class _TextToTextScreenState extends State<TextToTextScreen> {
       SnackBar(
         content: Text(
           message,
-          style: TextStyle(color: colorScheme.inversePrimary),
+          style: TextStyle(color: colorScheme.onErrorContainer),
         ),
-        backgroundColor: colorScheme.tertiary,
+        backgroundColor: colorScheme.errorContainer,
         behavior: SnackBarBehavior.floating,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
         action: SnackBarAction(
           label: 'OK',
-          textColor: colorScheme.primary,
+          textColor: colorScheme.onErrorContainer,
           onPressed: () {},
         ),
       ),

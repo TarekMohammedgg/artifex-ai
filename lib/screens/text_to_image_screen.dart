@@ -118,7 +118,6 @@ class _TextToImageScreenState extends State<TextToImageScreen> {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
-    final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Scaffold(
       resizeToAvoidBottomInset: true,
@@ -131,23 +130,22 @@ class _TextToImageScreenState extends State<TextToImageScreen> {
               // Input field with theme-aware colors
               TextField(
                 controller: describeController,
-                style: TextStyle(
-                  color: isDark ? Colors.white : Colors.grey.shade900,
-                ),
+                style: Theme.of(
+                  context,
+                ).textTheme.bodyLarge?.copyWith(color: colorScheme.onSurface),
                 decoration: InputDecoration(
                   hintText: "Describe the image you want to create...",
-                  hintStyle: TextStyle(
-                    color: isDark ? Colors.grey[400] : Colors.grey[600],
+                  hintStyle: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                    color: colorScheme.onSurfaceVariant,
                   ),
                   border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
+                    borderRadius: BorderRadius.circular(16),
+                    borderSide: BorderSide.none,
                   ),
                   filled: true,
                   fillColor: colorScheme.surfaceContainerHighest,
-                  prefixIcon: Icon(
-                    Icons.edit,
-                    color: colorScheme.primary,
-                  ),
+                  prefixIcon: Icon(Icons.edit, color: colorScheme.primary),
+                  contentPadding: const EdgeInsets.all(16),
                 ),
                 maxLines: 3,
                 minLines: 1,
@@ -202,36 +200,10 @@ class _TextToImageScreenState extends State<TextToImageScreen> {
               // Generate button
               SizedBox(
                 width: double.infinity,
-                child: ElevatedButton.icon(
+                child: _BouncyButton(
                   onPressed: isLoading ? null : _generateImage,
-                  icon: isLoading
-                      ? const SizedBox(
-                          width: 20,
-                          height: 20,
-                          child: CircularProgressIndicator(
-                            strokeWidth: 2,
-                          ),
-                        )
-                      : const Icon(Icons.auto_awesome),
-                  label: isLoading
-                      ? AnimatedTextKit(
-                          pause: const Duration(milliseconds: 900),
-                          repeatForever: true,
-                          animatedTexts: [
-                            TyperAnimatedText(
-                              "Generating...",
-                              speed: const Duration(
-                                milliseconds: 100,
-                              ),
-                            ),
-                          ],
-                        )
-                      : const Text("Generate Image"),
-                  style: ElevatedButton.styleFrom(
-                    padding: const EdgeInsets.symmetric(vertical: 16),
-                    backgroundColor: colorScheme.primary,
-                    foregroundColor: colorScheme.onPrimary,
-                  ),
+                  isLoading: isLoading,
+                  colorScheme: colorScheme,
                 ),
               ),
               const SizedBox(height: 20),
@@ -239,7 +211,12 @@ class _TextToImageScreenState extends State<TextToImageScreen> {
               // Image display area
               SizedBox(
                 height: 350,
-                child: _buildImageArea(colorScheme),
+                child: AnimatedSwitcher(
+                  duration: const Duration(milliseconds: 400),
+                  switchInCurve: Curves.easeOutBack,
+                  switchOutCurve: Curves.easeIn,
+                  child: _buildImageArea(colorScheme),
+                ),
               ),
             ],
           ),
@@ -250,11 +227,12 @@ class _TextToImageScreenState extends State<TextToImageScreen> {
 
   Widget _buildImageArea(ColorScheme colorScheme) {
     if (isLoading) {
-      return const ImageGenerationShimmer();
+      return const ImageGenerationShimmer(key: ValueKey('loading'));
     }
 
     if (errorMessage != null && image == null) {
       return Center(
+        key: const ValueKey('error'),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -277,6 +255,7 @@ class _TextToImageScreenState extends State<TextToImageScreen> {
 
     if (image != null) {
       return Column(
+        key: const ValueKey('loaded'),
         children: [
           Expanded(
             child: ClipRRect(
@@ -298,7 +277,10 @@ class _TextToImageScreenState extends State<TextToImageScreen> {
                   : const Icon(Icons.download),
               label: Text(isSaving ? "Saving..." : "Download Image"),
               style: ElevatedButton.styleFrom(
-                padding: const EdgeInsets.symmetric(vertical: 12),
+                padding: const EdgeInsets.symmetric(vertical: 16),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(16),
+                ),
               ),
             ),
           ),
@@ -308,24 +290,129 @@ class _TextToImageScreenState extends State<TextToImageScreen> {
 
     // Empty state
     return Center(
+      key: const ValueKey('empty'),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Icon(
             Icons.image_outlined,
             size: 80,
-            color: colorScheme.onSurface.withValues(alpha: 0.3),
+            color: colorScheme.onSurface.withValues(alpha: 0.1),
           ),
           const SizedBox(height: 16),
           Text(
             "Describe your vision above\nand tap Generate",
             textAlign: TextAlign.center,
-            style: TextStyle(
-              color: colorScheme.onSurface.withValues(alpha: 0.5),
-              fontSize: 16,
-            ),
+            style: TextStyle(color: colorScheme.onSurfaceVariant, fontSize: 16),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class _BouncyButton extends StatefulWidget {
+  const _BouncyButton({
+    required this.onPressed,
+    required this.isLoading,
+    required this.colorScheme,
+  });
+
+  final VoidCallback? onPressed;
+  final bool isLoading;
+  final ColorScheme colorScheme;
+
+  @override
+  State<_BouncyButton> createState() => _BouncyButtonState();
+}
+
+class _BouncyButtonState extends State<_BouncyButton> {
+  bool _isPressed = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTapDown: (_) => setState(() => _isPressed = true),
+      onTapUp: (_) {
+        setState(() => _isPressed = false);
+        if (widget.onPressed != null) {
+          widget.onPressed!();
+        }
+      },
+      onTapCancel: () => setState(() => _isPressed = false),
+      child: AnimatedScale(
+        scale: _isPressed ? 0.95 : 1.0,
+        duration: const Duration(milliseconds: 100),
+        curve: Curves.easeInOut,
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 200),
+          padding: const EdgeInsets.symmetric(vertical: 16),
+          decoration: BoxDecoration(
+            color: widget.onPressed == null
+                ? widget.colorScheme.surfaceContainerHighest
+                : widget.colorScheme.primary,
+            borderRadius: BorderRadius.circular(16),
+            boxShadow: [
+              if (widget.onPressed != null && !_isPressed)
+                BoxShadow(
+                  color: widget.colorScheme.primary.withValues(alpha: 0.4),
+                  blurRadius: 12,
+                  offset: const Offset(0, 6),
+                ),
+            ],
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              if (widget.isLoading)
+                const SizedBox(
+                  width: 20,
+                  height: 20,
+                  child: CircularProgressIndicator(
+                    strokeWidth: 2,
+                    color: Colors.white,
+                  ),
+                )
+              else
+                Icon(
+                  Icons.auto_awesome,
+                  color: widget.onPressed == null
+                      ? widget.colorScheme.onSurface.withValues(alpha: 0.38)
+                      : widget.colorScheme.onPrimary,
+                ),
+              const SizedBox(width: 8),
+              if (widget.isLoading)
+                DefaultTextStyle(
+                  style: TextStyle(
+                    color: widget.colorScheme.onPrimary,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                  ),
+                  child: AnimatedTextKit(
+                    pause: const Duration(milliseconds: 900),
+                    repeatForever: true,
+                    animatedTexts: [
+                      TyperAnimatedText(
+                        "Generating...",
+                        speed: const Duration(milliseconds: 100),
+                      ),
+                    ],
+                  ),
+                )
+              else
+                Text(
+                  "Generate Image",
+                  style: TextStyle(
+                    color: widget.onPressed == null
+                        ? widget.colorScheme.onSurface.withValues(alpha: 0.38)
+                        : widget.colorScheme.onPrimary,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                  ),
+                ),
+            ],
+          ),
+        ),
       ),
     );
   }
