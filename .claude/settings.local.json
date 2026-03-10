@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(ls -la /e/root/Programming/mobile-development/flutter_projects/artifex_ai/android/app/src/main/res/mipmap*)",
+      "Bash(ls -la /e/root/Programming/mobile-development/flutter_projects/artifex_ai/android/app/src/main/res/drawable*)",
+      "Bash(xargs head -100)",
+      "Bash(wc -l /e/root/Programming/mobile-development/flutter_projects/artifex_ai/test/*.dart)",
+      "Bash(ls -laR /e/root/Programming/mobile-development/flutter_projects/artifex_ai/android/app/src/main/res/mipmap-*/)",
+      "Bash(xargs wc -l)",
+      "Bash(xargs cat)"
+    ]
+  }
+}

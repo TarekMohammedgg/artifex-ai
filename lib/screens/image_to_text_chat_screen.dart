@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'package:artifex_ai/core/error_handling.dart';
 import 'package:artifex_ai/widgets/pick_image_with_caption.dart';
 import 'package:artifex_ai/services/google_service.dart';
@@ -227,8 +226,6 @@ class _ImageToTextScreenState extends State<ImageToTextScreen> {
           return "$role: ${msg.text}";
         })
         .join("\n");
-
-    log(allMessages);
 
     setState(() {
       messages = [thinkingMessage, ...messages];

@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'dart:io';
 import 'dart:typed_data';
 import 'package:artifex_ai/core/env.dart';
@@ -39,8 +38,6 @@ abstract class StabilityAi {
         );
       }
 
-      log("Generating image with style: $imageAIStyle");
-
       Uint8List image = await _ai.generateImage(
         prompt: prompt.trim(),
         apiKey: Env.stabilityApiKey,
@@ -54,7 +51,6 @@ abstract class StabilityAi {
         );
       }
 
-      log("Image generated successfully: ${image.length} bytes");
       return image;
     } on AiServiceException {
       rethrow;

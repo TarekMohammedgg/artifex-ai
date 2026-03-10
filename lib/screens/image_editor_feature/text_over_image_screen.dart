@@ -21,6 +21,13 @@ class _TextOverImageScreenState extends State<TextOverImageScreen> {
   final textController = TextEditingController();
   bool isSelected = false;
   final GlobalKey _globalKey = GlobalKey();
+
+  @override
+  void dispose() {
+    textController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -86,7 +93,7 @@ class _TextOverImageScreenState extends State<TextOverImageScreen> {
                           )
                         : Text(
                             textController.text.isEmpty
-                                ? "Tarek"
+                                ? "User"
                                 : textController.text,
                             style: const TextStyle(
                               color: Colors.white,
@@ -115,18 +122,13 @@ class _TextOverImageScreenState extends State<TextOverImageScreen> {
       final Uint8List pngBytes = byteData!.buffer.asUint8List();
       final file = await writeBytesToTempFile(pngBytes);
 
-      // final dir = await getTemporaryDirectory();
-      // final path =
-      //     '${dir.path}/filtered_${DateTime.now().millisecondsSinceEpoch}.png';
-      // final file = File(path);
-      // await file.writeAsBytes(pngBytes);
-
       await Gal.putImage(file.path);
-
+      if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text("✅ Filtered image saved to gallery!")),
       );
     } catch (e) {
+      if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text("❌ Failed to save filtered image: $e")),
       );

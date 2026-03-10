@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'package:artifex_ai/core/error_handling.dart';
 import 'package:artifex_ai/core/input_validator.dart';
 import 'package:artifex_ai/services/google_service.dart';
@@ -181,8 +180,6 @@ class _TextToTextScreenState extends State<TextToTextScreen> {
           return "$role: ${msg.text}";
         })
         .join("\n");
-
-    log(allMessages);
 
     setState(() {
       messages = [thinkingMessage, ...messages];

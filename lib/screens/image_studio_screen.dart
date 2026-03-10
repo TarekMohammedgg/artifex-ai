@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'dart:io';
 import 'dart:typed_data';
 import 'dart:ui';
@@ -564,8 +563,6 @@ class _ImageStudioScreenState extends State<ImageStudioScreen> {
       state = true;
       return state;
     } catch (e) {
-      log("save error: ${e.toString()}");
-
       state = false;
       return state;
     }

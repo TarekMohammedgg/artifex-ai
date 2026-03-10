@@ -41,10 +41,9 @@ class _PickImageWithCaptionState extends State<PickImageWithCaption> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
-    super.dispose();
     _captionController.dispose();
     _selectedImages.clear();
+    super.dispose();
   }
 
   @override

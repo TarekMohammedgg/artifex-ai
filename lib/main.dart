@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'package:artifex_ai/core/env.dart';
 import 'package:artifex_ai/firebase_options.dart';
 import 'package:artifex_ai/screens/home_screen.dart';
@@ -12,10 +13,14 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   // Load environment variables
-  await dotenv.load(fileName: ".env");
-
-  // Initialize Firebase
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  try {
+    await dotenv.load(fileName: ".env");
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
+  } catch (e) {
+    log(e.toString());
+  }
 
   // Initialize Gemini with API key from environment
   Gemini.init(apiKey: Env.geminiApiKey);

@@ -24,7 +24,6 @@ class _RecentImagesScreenState extends State<RecentImagesScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     fetchAssets();
   }

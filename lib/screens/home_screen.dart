@@ -1,10 +1,6 @@
-import 'dart:developer';
-import 'dart:typed_data';
-
 import 'package:artifex_ai/consts.dart';
 import 'package:artifex_ai/screens/image_studio_screen.dart';
 import 'package:artifex_ai/screens/image_to_text_chat_screen.dart';
-import 'package:artifex_ai/screens/recent_images_screen.dart';
 import 'package:artifex_ai/screens/settings_screen.dart';
 import 'package:artifex_ai/screens/text_to_image_screen.dart';
 import 'package:artifex_ai/screens/text_to_text_chat_screen.dart';
@@ -21,7 +17,6 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   List<AssetEntity> images = [];
-  bool getImages = false;
 
   Future<void> fetchAssets() async {
     images = await PhotoManager.getAssetListRange(
@@ -34,7 +29,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     fetchAssets();
   }
@@ -42,7 +36,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.background,
+      backgroundColor: Theme.of(context).colorScheme.surface,
 
       body: Padding(
         padding: const EdgeInsets.symmetric(vertical: 50, horizontal: 20),
@@ -210,8 +204,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
 
-              // bodyContainer(context),
-              // aicontainer(context),
             ],
           ),
         ),
@@ -219,253 +211,6 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  allow_permission(BuildContext context) {
-    PhotoManager.clearFileCache();
-    PhotoManager.requestPermissionExtend().then((PermissionState state) async {
-      log("the state is: ${state.isAuth}");
-      if (state.isAuth) {
-        // Navigator.push(
-        //   context,
-        //   MaterialPageRoute(builder: (context) => RecentImagesScreen()),
-        // );
-
-        images = await PhotoManager.getAssetListRange(
-          start: 0,
-          end: 20,
-          type: RequestType.image,
-        );
-        setState(() {});
-      } else {
-        PhotoManager.openSetting();
-      }
-    });
-  }
-
-  Container bodyContainer(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-      padding: EdgeInsets.symmetric(vertical: 20, horizontal: 5),
-      decoration: BoxDecoration(
-        color: Color(0xff321f1a),
-        borderRadius: BorderRadius.circular(20),
-      ),
-      child: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              ClipRRect(
-                borderRadius: BorderRadiusGeometry.circular(15),
-                child: Image.asset("assets/start_image.png"),
-              ),
-              SizedBox(width: 10),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "EDIT YOUR PHOTOS",
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "Use tools like crop,rotate ",
-
-                        style: TextStyle(color: Colors.grey),
-                      ),
-                      Text(
-                        "resize, emojis, paint, filters,",
-                        style: TextStyle(color: Colors.grey),
-                      ),
-                      Text("etc.", style: TextStyle(color: Colors.grey)),
-                    ],
-                  ),
-                ],
-              ),
-            ],
-          ),
-          SizedBox(
-            height: 30,
-            width: MediaQuery.sizeOf(context).width * 0.85,
-            child: Divider(color: Color(0xff412e29), thickness: 2),
-          ),
-
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 16),
-                child: Text(
-                  "Open image from ",
-                  style: TextStyle(color: Colors.grey, fontSize: 16),
-                ),
-              ),
-              SizedBox(height: 20),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  custom_button("Gallery", Icons.photo_outlined, () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) {
-                          return ImageStudioScreen(source: ImageSource.gallery);
-                        },
-                      ),
-                    );
-                  }),
-                  SizedBox(width: 10),
-                  custom_button("Camera", Icons.camera_alt_outlined, () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) =>
-                            ImageStudioScreen(source: ImageSource.camera),
-                      ),
-                    );
-                  }),
-                ],
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-
-  Container aicontainer(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-      padding: EdgeInsets.symmetric(vertical: 20, horizontal: 5),
-      decoration: BoxDecoration(
-        color: Color(0xff321f1a),
-        borderRadius: BorderRadius.circular(20),
-      ),
-      child: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              SizedBox(
-                height: 100,
-                child: ClipRRect(
-                  borderRadius: BorderRadiusGeometry.circular(15),
-                  child: Image.asset(
-                    "assets/ai_image.png",
-                    fit: BoxFit.scaleDown,
-                  ),
-                ),
-              ),
-              SizedBox(width: 10),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "USE AI ",
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "Chat with Ai,",
-
-                        style: TextStyle(color: Colors.grey),
-                      ),
-                      Text(
-                        "Generate images ",
-                        style: TextStyle(color: Colors.grey),
-                      ),
-                      Text("etc.", style: TextStyle(color: Colors.grey)),
-                    ],
-                  ),
-                ],
-              ),
-            ],
-          ),
-          SizedBox(
-            height: 30,
-            width: MediaQuery.sizeOf(context).width * 0.85,
-            child: Divider(color: Color(0xff412e29), thickness: 2),
-          ),
-
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 16),
-                child: Text(
-                  "Start ",
-                  style: TextStyle(color: Colors.grey, fontSize: 16),
-                ),
-              ),
-              SizedBox(height: 20),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  custom_button("Chat", Icons.chat_bubble_outline_outlined, () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) {
-                          return TextToTextScreen();
-                        },
-                      ),
-                    );
-                  }),
-                  SizedBox(width: 10),
-                  custom_button("Generate", Icons.generating_tokens_sharp, () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => TextToImageScreen(),
-                      ),
-                    );
-                  }),
-                ],
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-
-  GestureDetector custom_button(
-    String title,
-    IconData icon,
-    Function()? onTap,
-  ) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 35, vertical: 10),
-        decoration: BoxDecoration(
-          border: Border.all(
-            color: Color.fromARGB(255, 81, 57, 52),
-            width: 1.4,
-          ),
-          borderRadius: BorderRadius.circular(25),
-        ),
-        child: Row(
-          children: [
-            Icon(icon, color: Colors.white),
-            SizedBox(width: 5),
-            Text(title, style: TextStyle(color: Colors.white)),
-          ],
-        ),
-      ),
-    );
-  }
 }
 
 class CustomPositionedButton extends StatelessWidget {
@@ -484,8 +229,8 @@ class CustomPositionedButton extends StatelessWidget {
   final double? right;
   final double? bottom;
   final String title;
-  final Function()? onTap;
-  final icon;
+  final VoidCallback? onTap;
+  final IconData icon;
   @override
   Widget build(BuildContext context) {
     return Positioned(
@@ -528,9 +273,9 @@ class CustomItem extends StatelessWidget {
     required this.title,
     required this.icon,
   });
-  final Function()? onTap;
+  final VoidCallback? onTap;
   final String title;
-  final icon;
+  final IconData icon;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -565,8 +310,8 @@ class CustomItem extends StatelessWidget {
 
 class CustomContainer extends StatelessWidget {
   const CustomContainer({super.key, required this.icon, this.onTap});
-  final icon;
-  final onTap;
+  final IconData icon;
+  final VoidCallback? onTap;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
