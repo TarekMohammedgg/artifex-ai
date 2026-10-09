@@ -1,13 +1,11 @@
 import 'dart:ui';
 import 'package:artifex_ai/screens/image_studio_screen.dart';
 import 'package:artifex_ai/screens/image_to_text_chat_screen.dart';
-import 'package:artifex_ai/screens/settings_screen.dart';
 import 'package:artifex_ai/screens/text_to_image_screen.dart';
 import 'package:artifex_ai/screens/text_to_text_chat_screen.dart';
 import 'package:artifex_ai/theme/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:photo_manager/photo_manager.dart';
 
 class HomeScreen extends StatefulWidget {
   HomeScreen({super.key});
@@ -17,23 +15,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  List<AssetEntity> images = [];
-
-  Future<void> fetchAssets() async {
-    images = await PhotoManager.getAssetListRange(
-      start: 0,
-      end: 20,
-      type: RequestType.image,
-    );
-    setState(() {});
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    fetchAssets();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,23 +25,7 @@ class _HomeScreenState extends State<HomeScreen> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  // CustomContainer(icon: Icons.edit),
-                  CustomContainer(
-                    icon: Icons.settings,
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => SettingsScreen(),
-                        ),
-                      );
-                    },
-                  ),
-                ],
-              ),
+         
               const SizedBox(height: 20),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
