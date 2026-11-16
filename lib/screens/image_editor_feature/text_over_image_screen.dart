@@ -34,7 +34,7 @@ class _TextOverImageScreenState extends State<TextOverImageScreen> {
       appBar: AppBar(
         title: const Text("Text Over Image"),
         actions: [
-          IconButton(onPressed: _saveFilteredImage, icon: Icon(Icons.download)),
+          IconButton(onPressed: _saveFilteredImage, icon: const Icon(Icons.download)),
         ],
       ),
       floatingActionButton: FloatingActionButton(
@@ -57,7 +57,7 @@ class _TextOverImageScreenState extends State<TextOverImageScreen> {
               textPosition += details.delta;
             });
           },
-          child: Container(
+          child: SizedBox(
             width: double.infinity,
             height: 400,
             child: RepaintBoundary(
@@ -69,7 +69,6 @@ class _TextOverImageScreenState extends State<TextOverImageScreen> {
                         ? Image.file(File(imageFile!.path), fit: BoxFit.contain)
                         : Image.asset(
                             "assets/normal_image.png",
-
                             fit: BoxFit.contain,
                           ),
                   ),
@@ -86,6 +85,11 @@ class _TextOverImageScreenState extends State<TextOverImageScreen> {
                                 color: Colors.white,
                                 fontSize: 24,
                               ),
+                              decoration: const InputDecoration(
+                                hintText: "Enter text",
+                                hintStyle: TextStyle(color: Colors.white70),
+                                border: InputBorder.none,
+                              ),
                               onSubmitted: (_) {
                                 setState(() => isSelected = false);
                               },
@@ -93,11 +97,18 @@ class _TextOverImageScreenState extends State<TextOverImageScreen> {
                           )
                         : Text(
                             textController.text.isEmpty
-                                ? "User"
+                                ? "Double tap to edit"
                                 : textController.text,
                             style: const TextStyle(
                               color: Colors.white,
                               fontSize: 24,
+                              shadows: [
+                                Shadow(
+                                  color: Colors.black87,
+                                  blurRadius: 4,
+                                  offset: Offset(1, 1),
+                                ),
+                              ],
                             ),
                           ),
                   ),
@@ -125,12 +136,12 @@ class _TextOverImageScreenState extends State<TextOverImageScreen> {
       await Gal.putImage(file.path);
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("✅ Filtered image saved to gallery!")),
+        const SnackBar(content: Text("✅ Image saved to gallery!")),
       );
     } catch (e) {
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("❌ Failed to save filtered image: $e")),
+        SnackBar(content: Text("❌ Failed to save image: $e")),
       );
     }
   }

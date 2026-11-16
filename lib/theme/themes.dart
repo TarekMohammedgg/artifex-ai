@@ -1,16 +1,20 @@
 import 'package:flutter/material.dart';
 
-// The background color extracted exactly from the dark grey of the logo
-const Color _logoBackgroundDark = Color(0xFF1C1D21);
+// Brand colors derived directly from the primary logo
+const Color primaryBrandColor = Color(0xFF6A3DE8); // Electric Violet
+const Color accentBrandColor = Color(0xFF56D5E2); // Vivid Cyan / Aqua
+const Color darkSurfaceColor = Color(0xFF14131E); // Deep Slate Violet
 
 // ==========================================
-// Theme: Electric Aqua (Cyan/Blue)
+// Theme: Artifex Electric Violet & Aqua
 // ==========================================
 final ThemeData lightTheme = ThemeData(
   useMaterial3: true,
   brightness: Brightness.light,
   colorScheme: ColorScheme.fromSeed(
-    seedColor: const Color(0xFF00E5FF), // Bright Cyan
+    seedColor: primaryBrandColor,
+    primary: primaryBrandColor,
+    secondary: accentBrandColor,
     brightness: Brightness.light,
   ),
 );
@@ -18,18 +22,20 @@ final ThemeData lightTheme = ThemeData(
 final ThemeData darkTheme = ThemeData(
   useMaterial3: true,
   brightness: Brightness.dark,
-  scaffoldBackgroundColor: _logoBackgroundDark,
+  scaffoldBackgroundColor: darkSurfaceColor,
   colorScheme: ColorScheme.fromSeed(
-    seedColor: const Color(0xFF00E5FF), // Bright Cyan
+    seedColor: primaryBrandColor,
+    primary: primaryBrandColor,
+    secondary: accentBrandColor,
     brightness: Brightness.dark,
-    surface: _logoBackgroundDark,
+    surface: darkSurfaceColor,
   ),
 );
 
 const LinearGradient appGradient = LinearGradient(
   colors: [
-    Color(0xFF00E5FF), // Cyan
-    Color(0xFF8A2BE2), // Purple connection
+    primaryBrandColor, // Electric Violet #6A3DE8
+    accentBrandColor, // Vivid Cyan #56D5E2
   ],
   begin: Alignment.bottomLeft,
   end: Alignment.topRight,

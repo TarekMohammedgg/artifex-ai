@@ -22,3 +22,6 @@
 ## OkHttp / HTTP
 -dontwarn okhttp3.**
 -dontwarn okio.**
+
+## Play Core
+-dontwarn com.google.android.play.core.**

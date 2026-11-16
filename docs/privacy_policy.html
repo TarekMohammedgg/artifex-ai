@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Privacy Policy - Artifex Photo Editor</title>
+  <style>
+    :root {
+      --bg: #0E131F;
+      --card-bg: #181E30;
+      --accent: #00E5FF;
+      --text: #E6EDF3;
+      --text-muted: #8B949E;
+      --border: #30363D;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      line-height: 1.6;
+      background-color: var(--bg);
+      color: var(--text);
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 32px;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      box-shadow: 0 12px 36px rgba(0,0,0,0.4);
+    }
+    h1 {
+      color: var(--accent);
+      border-bottom: 2px solid var(--border);
+      padding-bottom: 12px;
+      margin-top: 0;
+    }
+    h2 {
+      color: #79C0FF;
+      margin-top: 28px;
+    }
+    h3 {
+      color: #A5D6FF;
+    }
+    p, li {
+      color: var(--text);
+      font-size: 15px;
+    }
+    .muted {
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+    code {
+      background: rgba(110, 118, 129, 0.4);
+      padding: 2px 6px;
+      border-radius: 6px;
+      font-family: monospace;
+    }
+    ul {
+      padding-left: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Privacy Policy for Artifex Photo Editor</h1>
+    <p class="muted"><strong>Last Updated:</strong> November 16, 2026</p>
+    
+    <p><strong>Artifex Photo Editor</strong> ("we", "our", or "us") values your privacy and is dedicated to protecting your personal information. This Privacy Policy outlines our practices regarding data collection, processing, and usage when you use our mobile application.</p>
+
+    <h2>1. Information Collection and Handling</h2>
+    <h3>a) On-Device Photo Processing</h3>
+    <p>All basic photo editing, cropping, color grading filters, bokeh blur effects, and on-device text overlays are processed locally directly on your device. We do not transfer, view, or store your private personal photos on our servers without your express action.</p>
+    <p>Our text recognition feature operates via Google ML Kit on-device machine learning APIs. Text extracted from your documents, signs, or images is processed on-device and remains confidential on your phone.</p>
+
+    <h3>b) AI Background Removal</h3>
+    <p>If you opt to use cloud-accelerated AI background removal, the chosen image is securely transmitted over HTTPS for the singular purpose of separating the foreground subject from the background, and returned directly to your app. Images are not retained or used for AI training.</p>
+
+    <h3>c) Device Permissions</h3>
+    <ul>
+      <li><code>android.permission.CAMERA</code>: Requested solely when you explicitly tap the camera option within the app to take a live photo for editing.</li>
+      <li><strong>Photo Picker</strong>: We use the native Android Photo Picker (<code>image_picker</code>), ensuring the app accesses only the specific photos you select, without requiring broad access to your entire device storage or media library.</li>
+      <li><code>android.permission.INTERNET</code>: Used to access AI background removal services and fetch occasional app updates/configurations via Firebase.</li>
+    </ul>
+
+    <h2>2. Third-Party Services</h2>
+    <p>Our app integrates trusted third-party SDKs that operate in compliance with Google Play Developer Policies:</p>
+    <ul>
+      <li><strong>Google Firebase</strong>: App performance monitoring and app stability.</li>
+      <li><strong>Google ML Kit</strong>: On-device text recognition.</li>
+    </ul>
+    <p>We do not sell, rent, trade, or monetize your personal photos or biometric data under any circumstances.</p>
+
+    <h2>3. Data Retention and Deletion</h2>
+    <p>Since we do not maintain user accounts or persistent remote storage of your edited photos, all edits remain on your local device storage. You can delete or manage any saved images at any time via your device's default Gallery or File Manager.</p>
+
+    <h2>4. Children's Privacy</h2>
+    <p>Artifex Photo Editor is intended for general audiences aged 13 and older. We do not knowingly collect personal identifiable information from children under 13.</p>
+
+    <h2>5. Contact Us</h2>
+    <p>If you have any questions or concerns regarding this Privacy Policy, please contact us at:</p>
+    <p><strong>Email:</strong> <code>support@artifex.ai</code></p>
+  </div>
+</body>
+</html>

@@ -551,7 +551,7 @@ class _ImageStudioScreenState extends State<ImageStudioScreen> {
         state = false;
         return false;
       }
-      ;
+
       final boundary =
           globalKey.currentContext!.findRenderObject() as RenderRepaintBoundary;
       final ui.Image image = await boundary.toImage(pixelRatio: 3.0);

@@ -1,5 +1,5 @@
-import 'package:artifex_ai/consts.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:artifex_ai/consts.dart';
 
 void main() {
   group('AiConfig', () {
@@ -8,7 +8,6 @@ void main() {
     });
 
     test('maxPromptLength is reasonable', () {
-      expect(AiConfig.maxPromptLength, greaterThan(1000));
       expect(AiConfig.maxPromptLength, equals(30000));
     });
 
@@ -34,7 +33,7 @@ void main() {
 
     test('gradient has valid color values', () {
       for (final color in artifexGradient.colors) {
-        expect(color.value, isNonZero);
+        expect(color.toARGB32(), isNonZero);
       }
     });
   });

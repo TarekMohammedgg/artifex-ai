@@ -1,185 +1,214 @@
-# 🎨 Artifex AI
+<div align="center">
 
-A feature-rich Flutter AI chatbot application that integrates multiple AI services for conversational AI, image generation, and advanced image editing capabilities.
+# 📸 Artifex Photo Editor
 
-![Flutter](https://img.shields.io/badge/Flutter-02569B?style=for-the-badge&logo=flutter&logoColor=white)
-![Dart](https://img.shields.io/badge/Dart-0175C2?style=for-the-badge&logo=dart&logoColor=white)
-![Firebase](https://img.shields.io/badge/Firebase-FFCA28?style=for-the-badge&logo=firebase&logoColor=black)
+### *Professional On-Device Photo Studio & AI Creative Suite*
 
-## ✨ Features
+<p align="center">
+  <img src="assets/artifex_studio_banner.png" alt="Artifex Photo Editor Studio Banner" width="100%" style="border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.3);" />
+</p>
 
-### 🗣️ AI Chat
-- **Text-to-Text Chat**: Conversational AI powered by Google Gemini 2.5 Flash
-- **Image-to-Text Chat**: Multi-modal AI that understands images and text together
-- **Markdown Support**: AI responses rendered with full markdown formatting
-- **Animated Responses**: Smooth typing animations for AI responses
+[![Flutter](https://img.shields.io/badge/Flutter-3.8+-02569B?style=for-the-badge&logo=flutter&logoColor=white)](https://flutter.dev)
+[![Dart](https://img.shields.io/badge/Dart-3.8+-0175C2?style=for-the-badge&logo=dart&logoColor=white)](https://dart.dev)
+[![Target SDK](https://img.shields.io/badge/Target_SDK-36-3DDC84?style=for-the-badge&logo=android&logoColor=white)](https://developer.android.com)
+[![Version](https://img.shields.io/badge/Version-1.0.6%2B16-5DE0E6?style=for-the-badge)](pubspec.yaml)
+[![Google Play](https://img.shields.io/badge/Google_Play-Available-414141?style=for-the-badge&logo=googleplay&logoColor=white)](https://play.google.com/store/apps/details?id=com.artifex.ai)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
 
-### 🎨 Image Generation
-- **Text-to-Image**: Generate images from text descriptions using Stability AI
-- **Multiple Art Styles**: Choose from various artistic styles (Anime, Photographic, Digital Art, etc.)
-- **Download & Save**: Save generated images directly to device gallery
+<p align="center">
+  <a href="https://play.google.com/store/apps/details?id=com.artifex.ai">
+    <img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" height="70" alt="Get it on Google Play" />
+  </a>
+</p>
 
-### 🖼️ Image Studio
-- **Background Removal**: AI-powered background removal using Remove.bg
-- **Image Filters**: Apply various color filters and effects
-- **Text Overlay**: Add custom text to images
-- **Blur Effects**: Apply artistic blur effects
-- **Image Cropping**: Precise image cropping tools
-- **OCR/Text Recognition**: Extract text from images using Google ML Kit
+</div>
 
-### 🎨 Theme Support
-- **Light/Dark Mode**: Full theme support with easy toggle
-- **Modern Design**: Beautiful, responsive UI design
+---
+
+## 📖 Overview
+
+**Artifex Photo Editor** is a feature-complete, production-grade mobile photo studio built with **Flutter**. Engineered with high-performance on-device image processing algorithms, dynamic hardware-accelerated color matrices, intelligent AI subject cutouts, lens bokeh depth rendering, and offline machine learning text recognition via Google ML Kit.
+
+Designed for privacy-first, zero-latency workflows with 100% compliance with modern **Google Play Store policies (`targetSdk 36`)**.
+
+---
+
+## 📱 App Showcase
+
+<div align="center">
+
+| 1. All-in-One Studio | 2. AI Cutout Engine | 3. Creative Filters |
+| :---: | :---: | :---: |
+| <img src="assets/store_listing/screenshots/screenshot_1.png" width="260" style="border-radius: 12px;" /> | <img src="assets/store_listing/screenshots/screenshot_2.png" width="260" style="border-radius: 12px;" /> | <img src="assets/store_listing/screenshots/screenshot_3.png" width="260" style="border-radius: 12px;" /> |
+| *Full Canvas & Multi-Layer Editing* | *Instant 1-Tap Subject Cutout* | *20+ Dynamic Color Presets* |
+
+| 4. Cinematic Bokeh | 5. Smart OCR Scanner | 6. Custom Typography |
+| :---: | :---: | :---: |
+| <img src="assets/store_listing/screenshots/screenshot_4.png" width="260" style="border-radius: 12px;" /> | <img src="assets/store_listing/screenshots/screenshot_5.png" width="260" style="border-radius: 12px;" /> | <img src="assets/store_listing/screenshots/screenshot_6.png" width="260" style="border-radius: 12px;" /> |
+| *Radial & Linear Tilt-Shift Focus* | *On-Device Google ML Kit Text OCR* | *Aesthetic Fonts, Colors & Quotes* |
+
+</div>
+
+---
+
+## ✨ Key Features
+
+### 🎨 1. Pro Creative Studio (All-in-One Canvas)
+- **Multi-Layer Interactive Editing**: Combine cropping, live color matrix filters, text overlays, and Gaussian blur on a single interactive canvas.
+- **Precision Image Cropping**: Aspect-ratio control (1:1, 4:5, 16:9, 9:16), freeform cropping, and rotational angles powered by native `UCropActivity`.
+- **Lossless Gallery Export**: Direct-to-gallery image saving with full runtime permission compliance via `gal`.
+
+### 🪄 2. AI Background Removal
+- **Precision Cutout Engine**: Intelligent subject and boundary separation for complex edges (hair, pets, detailed product shots).
+- **Instant PNG Export**: Save transparent PNG cutouts or prepare assets for custom graphic backgrounds.
+- **Interactive Inspection**: Smooth zoom and pan before saving via Flutter's `InteractiveViewer`.
+
+### 🌈 3. Creative Cinematic Filters & Presets
+- **20+ Dynamic Color Matrices**: Real-time GPU-accelerated transformations (`Vintage`, `Cyberpunk`, `Golden Hour`, `Monochrome`, `Emerald`, `Cool/Warm Tones`, etc.).
+- **Granular Intensity Control**: Smooth, responsive slider to blend filter strength from 0% to 100%.
+
+### 💧 4. Selective Blur & Bokeh (Portrait Focus)
+- **Radial Aperture Focus**: Emphasize portrait faces while gently blurring distracting backgrounds.
+- **Linear Tilt-Shift**: Replicate miniature world cinematography.
+- **Adjustable Blur Falloff**: Granular control over aperture radius and Gaussian blur depth (`sigmaX` / `sigmaY`).
+
+### 🔍 5. Smart OCR Text Scanner (On-Device ML)
+- **100% Offline Machine Learning**: High-accuracy text recognition powered by **Google ML Kit** running directly on device hardware.
+- **Instant Extraction**: Extract text from documents, signs, receipts, business cards, and book pages without sending images to any external server.
+- **One-Tap Actions**: Copy extracted text directly to clipboard or share via system sheet.
+
+### ✍️ 6. Typography & Text Overlay
+- **Gesture-Driven Positioning**: Freely position, scale, and rotate text elements across your canvas.
+- **Rich Color Palettes & Styling**: Custom font sizes, high-contrast drop shadows, strokes, and color swatches.
+
+---
+
+## 🏛️ Architecture & Project Structure
+
+```text
+lib/
+├── core/                        # Core infrastructure & domain utilities
+│   ├── env.dart                 # Type-safe runtime environment loader
+│   ├── error_handling.dart      # Functional Result<T> & custom exceptions
+│   └── input_validator.dart     # Input verification & string sanitization
+├── functions/                   # Pure single-responsibility helpers
+│   ├── color_filters.dart       # Matrix color matrices
+│   ├── crop_image.dart          # Native cropper wrapper
+│   ├── pick_image.dart          # Android Photo Picker adapter
+│   └── tempfile.dart            # In-memory byte to disk converters
+├── screens/                     # Presentation layer
+│   ├── home_screen.dart         # Modern Studio dashboard & tool launcher
+│   ├── image_studio_screen.dart # Multi-layer all-in-one canvas editor
+│   └── image_editor_feature/    # Modular dedicated feature screens
+│       ├── blur_image_screen.dart
+│       ├── filters_image_screen.dart
+│       ├── removebg_image_screen.dart
+│       ├── text_over_image_screen.dart
+│       └── text_recognition_screen.dart
+├── services/                    # External API boundaries
+│   └── remove_bg_service.dart   # Remove.bg client with resilience & timeout guards
+└── theme/                       # Design system & dark mode
+    ├── themes.dart              # Custom Electric Aqua & Neon Purple gradients
+    ├── light_mode.dart          # High-contrast clean light theme
+    ├── dark_mode.dart           # Sleek OLED dark theme
+    └── toggle_theme.dart        # ThemeProvider state management
+```
+
+---
+
+## 🔒 Privacy & Play Store Compliance
+
+Artifex Photo Editor is built in strict accordance with the latest **Google Play Developer Policies**:
+
+1. **Photo and Video Permissions Policy**:
+   - Uses the official Android Photo Picker (`image_picker`).
+   - Broad media permissions (`READ_MEDIA_IMAGES` and `READ_MEDIA_VIDEO`) are stripped via `tools:node="remove"`.
+2. **On-Device Confidentiality**:
+   - Basic image editing, filtering, blur, and OCR text recognition execute **100% on-device**. No user photos are uploaded or stored remotely without user action.
+3. **Camera Feature Compatibility**:
+   - `android.hardware.camera` is declared with `android:required="false"` to ensure compatibility with tablets, convertibles, and Chromebooks.
+4. **Target SDK & Obfuscation**:
+   - Targeted for **Android 16 / 15 (`targetSdk 36`)**.
+   - ProGuard/R8 code minification and resource shrinking enabled for a compact download footprint.
+
+Official documentation:
+- [Privacy Policy Document (Markdown)](PRIVACY_POLICY.md)
+- [Privacy Policy Web Page (HTML)](docs/privacy_policy.html)
+- [Google Play Store Listing Metadata](STORE_LISTING.md)
+
+---
+
+## 🛠️ Tech Stack & Dependencies
+
+| Layer | Technology | Purpose |
+| :--- | :--- | :--- |
+| **Framework** | [Flutter](https://flutter.dev) (v3.8.1+) | Cross-platform UI toolkit |
+| **Language** | [Dart](https://dart.dev) (v3.8.1+) | Strict type-safe reactive programming |
+| **OCR / ML** | [Google ML Kit](https://developers.google.com/ml-kit) | High-performance on-device text recognition |
+| **Cropping** | [Image Cropper](https://pub.dev/packages/image_cropper) (UCrop) | Aspect-ratio rotation & image trimming |
+| **Gallery Storage** | [Gal](https://pub.dev/packages/gal) | Modern scoped storage image saving |
+| **State Management** | [Provider](https://pub.dev/packages/provider) | Reactive theme & studio state management |
+| **UI Effects** | [Shimmer](https://pub.dev/packages/shimmer) | Loading placeholder animations |
+
+---
 
 ## 🚀 Getting Started
 
 ### Prerequisites
-
-- Flutter SDK ^3.8.1
-- Dart SDK
-- Firebase project (for Gemini AI)
-- API keys for external services
+- [Flutter SDK](https://flutter.dev/docs/get-started/install) (`>= 3.8.1`)
+- Android SDK Platform `36` (Android Studio Ladybug / Meerkat or newer)
 
 ### Installation
 
-1. **Clone the repository**
+1. **Clone the repository**:
    ```bash
-   git clone https://github.com/yourusername/ai_chatbot.git
-   cd ai_chatbot
+   git clone https://github.com/TarekMohammedgg/artifex-ai.git
+   cd artifex-ai
    ```
 
-2. **Install dependencies**
+2. **Install project dependencies**:
    ```bash
    flutter pub get
    ```
 
-3. **Configure Environment Variables**
-   
-   Copy the example environment file:
-   ```bash
-   cp .env.example .env
-   ```
-   
-   Edit `.env` and add your API keys:
+3. **Configure Environment Variables** (Optional — only required for cloud AI background removal):
+   Create a `.env` file in the root directory:
    ```env
-   GEMINI_API_KEY=your_gemini_api_key_here
-   STABILITY_API_KEY=your_stability_api_key_here
-   REMOVEBG_API_KEY=your_removebg_api_key_here
-   HF_TOKEN=your_huggingface_token_here
-   HUGGINGFACE_API_KEY=your_huggingface_api_key_here
+   REMOVEBG_API_KEY=your_api_key_here
    ```
 
-4. **Configure Firebase**
-   
-   - Create a Firebase project at [Firebase Console](https://console.firebase.google.com)
-   - Enable Firebase AI (Gemini) in your project
-   - Download and add your `google-services.json` (Android) and `GoogleService-Info.plist` (iOS)
-   - The `firebase_options.dart` should be configured with your project settings
-
-5. **Run the app**
+4. **Run on connected device or emulator**:
    ```bash
    flutter run
    ```
 
-## 🔑 API Keys Setup
-
-| Service | Purpose | Get Key From |
-|---------|---------|--------------|
-| **Gemini API** | AI Chat & Vision | [Google AI Studio](https://aistudio.google.com/apikey) |
-| **Stability AI** | Image Generation | [Stability Platform](https://platform.stability.ai/) |
-| **Remove.bg** | Background Removal | [Remove.bg API](https://www.remove.bg/api) |
-| **Hugging Face** | Additional AI Models | [Hugging Face](https://huggingface.co/settings/tokens) |
-
-## 📁 Project Structure
-
-```
-lib/
-├── core/                    # Core utilities
-│   ├── env.dart            # Environment variable access
-│   ├── error_handling.dart # Error handling utilities
-│   └── input_validator.dart# Input validation
-├── screens/                 # UI screens
-│   ├── home_screen.dart    # Main navigation
-│   ├── text_to_text_chat_screen.dart
-│   ├── image_to_text_chat_screen.dart
-│   ├── text_to_image_screen.dart
-│   ├── image_studio_screen.dart
-│   └── image_editor_feature/
-├── services/               # API services
-│   ├── google_service.dart # Gemini AI service
-│   ├── stability_ai.dart   # Image generation
-│   └── remove_bg_service.dart
-├── widgets/                # Reusable widgets
-│   ├── shimmer_loading.dart
-│   └── ...
-├── theme/                  # Theme configuration
-│   ├── dark_mode.dart
-│   ├── light_mode.dart
-│   └── toggle_theme.dart
-├── functions/              # Utility functions
-├── consts.dart            # App constants
-└── main.dart              # App entry point
-```
-
-## 🧪 Running Tests
-
-```bash
-# Run all tests
-flutter test
-
-# Run specific test file
-flutter test test/input_validator_test.dart
-
-# Run with coverage
-flutter test --coverage
-```
-
-## 🔒 Security Best Practices
-
-- ⚠️ **Never commit `.env` file** with real API keys
-- ✅ Use `.env.example` as a template (safe to commit)
-- ✅ API keys are loaded at runtime from environment variables
-- ✅ Proper error handling prevents key exposure in logs
-
-## 🛠️ Built With
-
-- **[Flutter](https://flutter.dev/)** - UI Framework
-- **[Firebase AI](https://firebase.google.com/docs/genai)** - Gemini AI Integration
-- **[Stability AI](https://stability.ai/)** - Image Generation
-- **[Provider](https://pub.dev/packages/provider)** - State Management
-- **[dash_chat_2](https://pub.dev/packages/dash_chat_2)** - Chat UI
-- **[flutter_markdown](https://pub.dev/packages/flutter_markdown)** - Markdown Rendering
-- **[shimmer](https://pub.dev/packages/shimmer)** - Loading Animations
-- **[Google ML Kit](https://pub.dev/packages/google_mlkit_text_recognition)** - Text Recognition
-
-## 📱 Supported Platforms
-
-- ✅ Android
-- ✅ iOS
-- ✅ Web
-- ✅ Windows
-- ✅ macOS
-- ✅ Linux
-
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## 🙏 Acknowledgments
-
-- Google Gemini AI Team
-- Stability AI
-- Flutter Community
-- All open-source contributors
+5. **Build signed production Android App Bundle (AAB)**:
+   ```bash
+   flutter build appbundle --release
+   ```
+   The signed bundle will be generated at:
+   ```text
+   build/app/outputs/bundle/release/app-release.aab
+   ```
 
 ---
 
-Made with ❤️ using Flutter
+## 🧪 Testing
+
+Artifex includes unit and widget test suites covering validation, theme providers, gradient contracts, and custom UI components:
+
+```bash
+flutter test
+```
+
+---
+
+## 📄 License
+
+This project is licensed under the MIT License — see the [LICENSE](LICENSE) file for details.
+
+---
+
+<div align="center">
+  <sub>Developed with ❤️ for mobile photography enthusiasts and digital creators.</sub>
+</div>

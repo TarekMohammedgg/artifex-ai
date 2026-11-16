@@ -16,73 +16,20 @@ import 'package:flutter/foundation.dart'
 /// ```
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
-    if (kIsWeb) {
-      return web;
+    if (!kIsWeb && defaultTargetPlatform == TargetPlatform.android) {
+      return android;
     }
-    switch (defaultTargetPlatform) {
-      case TargetPlatform.android:
-        return android;
-      case TargetPlatform.iOS:
-        return ios;
-      case TargetPlatform.macOS:
-        return macos;
-      case TargetPlatform.windows:
-        return windows;
-      case TargetPlatform.linux:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for linux - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
-      default:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions are not supported for this platform.',
-        );
-    }
+    throw UnsupportedError(
+      'DefaultFirebaseOptions are only configured for Android - '
+      'you can reconfigure this by running the FlutterFire CLI again.',
+    );
   }
 
-  static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyDEG3jmulk7zL8NEcjENbz89oA1ZOvOn00',
-    appId: '1:81071435697:web:647926747a463592ee1790',
-    messagingSenderId: '81071435697',
-    projectId: 'gymzy-a5a04',
-    authDomain: 'gymzy-a5a04.firebaseapp.com',
-    storageBucket: 'gymzy-a5a04.firebasestorage.app',
-    measurementId: 'G-5SYV94WK4W',
-  );
-
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyByZgZq0Pl_zuEXarcHwKtDNZbDWMnQUZI',
-    appId: '1:81071435697:android:2c73fab8463d3f7cee1790',
-    messagingSenderId: '81071435697',
-    projectId: 'gymzy-a5a04',
-    storageBucket: 'gymzy-a5a04.firebasestorage.app',
-  );
-
-  static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyD__iqdxNLGGLaoMJR-isyYX2xMph54RyA',
-    appId: '1:81071435697:ios:fdd48de4f107edbbee1790',
-    messagingSenderId: '81071435697',
-    projectId: 'gymzy-a5a04',
-    storageBucket: 'gymzy-a5a04.firebasestorage.app',
-    iosBundleId: 'com.example.aiChatbot',
-  );
-
-  static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyD__iqdxNLGGLaoMJR-isyYX2xMph54RyA',
-    appId: '1:81071435697:ios:fdd48de4f107edbbee1790',
-    messagingSenderId: '81071435697',
-    projectId: 'gymzy-a5a04',
-    storageBucket: 'gymzy-a5a04.firebasestorage.app',
-    iosBundleId: 'com.example.aiChatbot',
-  );
-
-  static const FirebaseOptions windows = FirebaseOptions(
-    apiKey: 'AIzaSyDEG3jmulk7zL8NEcjENbz89oA1ZOvOn00',
-    appId: '1:81071435697:web:bf31c835bacc3131ee1790',
-    messagingSenderId: '81071435697',
-    projectId: 'gymzy-a5a04',
-    authDomain: 'gymzy-a5a04.firebaseapp.com',
-    storageBucket: 'gymzy-a5a04.firebasestorage.app',
-    measurementId: 'G-ZREP082GK9',
+    apiKey: 'AIzaSyDFIkZVdweM4rpQOau90YO-hWDYOSDaQ2c',
+    appId: '1:550613338033:android:d978987f4bc2df7d8cdf90',
+    messagingSenderId: '550613338033',
+    projectId: 'artifex-ai-app',
+    storageBucket: 'artifex-ai-app.firebasestorage.app',
   );
 }

@@ -51,8 +51,14 @@ app.*.map.json
 android/key.properties
 *.jks
 
+# Backups and temporary files
+*.bak*
+.vscode/
+
 # Firebase Configuration
 android/app/google-services.json
 ios/Runner/GoogleService-Info.plist
 lib/firebase_options.dart
 macos/Runner/GoogleService-Info.plist
+CLAUDE.md
+.claude/
